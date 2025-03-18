@@ -10,32 +10,32 @@ import * as _ from 'lodash';
 })
 export class ContactService {
 
-  mockList : Contact[] =  [
+  mockList: Contact[] = [
     {
       id: 1,
-      firstName : "Jim",
-      lastName : "Jimson",
+      firstName: "Jim",
+      lastName: "Jimson",
       phoneNumber: "",
-      email : "",
+      email: "",
     },
     {
       id: 2,
-      firstName : "Jack",
-      lastName : "Jackson",
+      firstName: "Jack",
+      lastName: "Jackson",
       phoneNumber: "",
-      email : "",
+      email: "",
     }
   ]
 
 
   constructor(
-    private dialog : MatDialog
+    private dialog: MatDialog
   ) { }
 
 
   //#region mock back end calls
 
-  getContactList$() : Observable<Contact[]> {
+  getContactList$(): Observable<Contact[]> {
 
     return of(this.mockList).pipe(
       delay(2000)
@@ -46,7 +46,7 @@ export class ContactService {
   saveContact$(contact: Contact): Observable<Contact> {
     // Find the index of the contact in the list
     let index = _.findIndex(this.mockList, (c) => c.id === contact.id);
-  
+
     if (index === -1) {
       // If the contact doesn't exist, add it
       this.mockList = [...this.mockList, { ...contact, id: this.getNextId() }];
@@ -58,10 +58,9 @@ export class ContactService {
         ...this.mockList.slice(index + 1)
       ];
     }
-  
+
     return of(contact);
   }
-  
 
   private getNextId(): number {
     // Calculate the next ID based on the current highest ID
@@ -70,7 +69,7 @@ export class ContactService {
 
   //#endregion
 
-  editContactDialog$(contact: Contact) : Observable<Contact> {
+  editContactDialog$(contact: Contact | null): Observable<Contact> {
 
     const dialogRef = this.dialog.open(ContactEditDialogComponent, {
       data: {

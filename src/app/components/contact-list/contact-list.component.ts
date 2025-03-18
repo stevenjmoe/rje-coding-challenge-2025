@@ -18,20 +18,22 @@ export class ContactListComponent {
   activeContact$: Observable<Contact | undefined>;
 
   constructor(
-    private contactService : ContactService,
-    private store : Store<State>
-  ){
+    private contactService: ContactService,
+    private store: Store<State>
+  ) {
     this.contactList$ = this.store.select(selectContactList)
     this.activeContact$ = this.store.select(selectActiveContact);
   }
 
-  viewContactClicked(contactId : number ){
-    this.store.dispatch(actions.contactSelected({contactId}))
+  viewContactClicked(contactId: number) {
+    this.store.dispatch(actions.contactSelected({ contactId }))
   }
 
-  editContactClicked(contact : Contact){
-    this.store.dispatch(actions.editContactClicked({contact}))
+  editContactClicked(contact: Contact) {
+    this.store.dispatch(actions.editContactClicked({ contact }))
   }
 
-
+  addContactClicked() {
+    this.store.dispatch(actions.addContactClicked())
+  }
 }

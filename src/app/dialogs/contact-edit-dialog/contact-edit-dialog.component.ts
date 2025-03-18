@@ -10,39 +10,43 @@ import { Contact } from 'src/app/models/contact.model';
 })
 
 export class ContactEditDialogComponent {
-  
-  constructor(
-    public dialogRef: MatDialogRef<{contact: Contact}>,
-    @Inject(MAT_DIALOG_DATA) public data: {
-      contact : Contact | null
-    }
-  ){
+  dialogTitle: string;
 
+
+  constructor(
+    public dialogRef: MatDialogRef<{ contact: Contact }>,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      contact: Contact | null
+    }
+  ) {
+
+    this.dialogTitle = this.data.contact
+      ? `Editing Contact with ID: ${data.contact?.id}`
+      : "Creating new Contact"
   }
 
   contactForm: FormGroup = new FormGroup({
-    firstName : new FormControl(),
-    lastName : new FormControl(),
-    phoneNumber : new FormControl(),
-    email : new FormControl()
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    phoneNumber: new FormControl(),
+    email: new FormControl()
   })
 
-  ngOnInit(){
-    if(this.data.contact){
+  ngOnInit() {
+    if (this.data.contact) {
       this.contactForm.patchValue(this.data.contact)
       console.log(this.contactForm.value)
     }
   }
 
-  onSaveClick() : void {
+  onSaveClick(): void {
     this.dialogRef.close({
-      id : this.data.contact?.id || -1,
+      id: this.data.contact?.id || -1,
       ...this.contactForm.value
     })
   }
 
-  onCancelClick() : void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
-
 }
