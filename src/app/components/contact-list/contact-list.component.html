@@ -10,17 +10,18 @@
     [contact]="activeContact$ | async"
 ></app-contact-detail> -->
 
+<ng-container *ngIf="contactList$ | async as contactList">
+  <div *ngIf="contactList.length === 0; else mainBlock">Loading...</div>
 
-<div *ngIf="(contactList$ | async)?.length === 0 ; else mainBlock">Loading...</div>
-
-<ng-template #mainBlock>
-  <button type="button" class="btn-secondary" (click)="addContactClicked()">Add Contact</button>
-  <div *ngFor="let contact of contactList$ | async" class="contact-list-item">
-    <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
-    <div class="contact-actions">
-      <button type="button" class="btn-primary" (click)="viewContactClicked(contact.id)">View Details</button>
-      <button type="button" class="btn-secondary" (click)="editContactClicked(contact)">Edit Contact</button>
+  <ng-template #mainBlock>
+    <button type="button" class="btn-secondary" (click)="addContactClicked()">Add Contact</button>
+    <div *ngFor="let contact of contactList" class="contact-list-item">
+      <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
+      <div class="contact-actions">
+        <button type="button" class="btn-primary" (click)="viewContactClicked(contact.id)">View Details</button>
+        <button type="button" class="btn-secondary" (click)="editContactClicked(contact)">Edit Contact</button>
+      </div>
     </div>
-  </div>
-  <app-contact-detail [contact]="activeContact$ | async"></app-contact-detail>
-</ng-template>
+    <app-contact-detail [contact]="activeContact$ | async"></app-contact-detail>
+  </ng-template>
+</ng-container>
