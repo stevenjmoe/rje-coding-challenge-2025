@@ -27,6 +27,36 @@ In our main code base, you would expect to find this architecture replicated wit
 # Answers
 
 1. //Optionally provide any notes relating to question 1 here.
+
+Not specifically related to question 1, but sorry about the automatic formatting. I would adjust my config to match the orgs preferences.
+
+
 2. //Optionally provide any notes relating to question 2 here.
+
+I chose to reload the contact list, but another option would have been to update the record in place with the id of the newly created contact.
+
+I also didn't add any loading indicator for saving and loading the contacts, but in a real project I would.
+
 3. //Provide your answer to question 3 here.
+
+RxJS provides a catchError operator that can be used to catch the error on the observable and then either return a new observable, or throw an error.
+
+The below demonstrates how you might handle an error when trying to get the contact list by logging it and returning an empty fallback array:
+
+```typescript
+  getContactList$(): Observable<Contact[]> {
+    return of(this.mockList).pipe(
+      catchError(err => { 
+        console.error(err);
+        return of([]) 
+      }),
+      delay(2000)
+    )
+  }
+```
+Realistically you would want to handle this in a much more robust way (retrying and/or returning a useful error message, for example).
+
+
 4. //Provide your link or location of your file within the repo here.
+
+see question4 pdf
